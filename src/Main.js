@@ -1,32 +1,33 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, View, FlatList} from 'react-native';
-import axios from 'axios'
+import {SafeAreaView, View, FlatList, ActivityIndicator, Item} from 'react-native';
 
-import { MySearch } from './components';
-import data from './components/data/data.json'
+import { MySearch } from './components/MySearch';
 
 const Main = () => {
 
   const [originalList, setOriginalList] = useState([])
-  const [myList, setList] = useState([])
+  const [list, setList] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetchData()
   }, [])
 
-  const fetchData = async () => {
-    let response = await axios.get('./components/data/data.json')
+  const fetchData = () => {
+    var response = require('./components/data/data.json')
     setList(response.data)
     setOriginalList(response.data)
     setLoading(false)
   }
 
-  const renderList = ({item}) => <Item data={item}/>
+  const renderList = ({item}) => {
+    return(
+      <Item data={item}/>
+    )
+  }  
 
   const searchList = (text) => {
-    let filteredList = originalList.filter((item) => {
-
+    let filteredList = originalList.filter(function(item) {
       const itemData = item.title.toUpperCase()
       const textData = text.toUpperCase()
 
@@ -43,13 +44,20 @@ const Main = () => {
 
           <MySearch onSearch={searchList} />
 
-          <FlatList
-            refreshing={loading}
-            onRefresh={fetchData}
-            keyExtractor={(item,index) => index.toString()}
-            data={myList}
-            renderItem={renderList}
-          />
+          { 
+          loading ?
+            <View style = {{flex:1, justifyContent: 'center'}}>
+                <ActivityIndicator/>
+            </View>
+            :
+            <FlatList
+              refreshing={loading}
+              onRefresh={fetchData}
+              keyExtractor={(item,index) => index.toString()}
+              data={list}
+              renderItem={renderList}
+            />
+          }
 
         </View>
       </SafeAreaView>

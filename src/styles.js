@@ -6,7 +6,8 @@ const styles = {
         container: {
             borderRadius: 10,
             margin: 10,
-            padding: 10
+            padding: 10,
+            backgroundColor: '#D6EFC7'
         },
 
         restaurantName: {
@@ -22,7 +23,7 @@ const styles = {
 
     searchBar: StyleSheet.create({
         searchContainer: {
-            backgroundColor: 'red',
+            backgroundColor: '#EEBB4D',
             margin: 10,
             borderRadius: 10,
             width: Dimensions.get("window").width/1.05,
