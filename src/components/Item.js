@@ -13,15 +13,27 @@ import styles from '../styles'
 
 const Item = props => {
     return(
-        <View style={StyleSheet.item.container}>
+        <View style={styles.item.container}>
 
             <Image
-                style={StyleSheet.item.image}
+                style={styles.item.image}
                 source={{uri: props.data.image}}
             />
 
-            <Text style={styles.item.restaurantName}>{props.data.name}</Text>
-            <Text>{props.data.location}</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View>
+                    <Text style={styles.item.restaurantName}>{props.data.name}</Text>
+                    <Text>{props.data.location}</Text>
+                </View>   
+                <View style={{flexDirection: 'row'}}>
+                    <Image source={require('../assets/heart.png')} style={styles.item.heart}/>
+                    <Text style={styles.item.like}>{props.data.likes}</Text>                      
+                </View>
+           
+            </View>
+
+
+
         </View>
     )
 }
